@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id" class="transition duration-300">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IPA: The Untold Stories</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+
+  <div class="min-h-screen flex flex-col items-center justify-center p-6">
+    <!-- Toggle Mode -->
+    <div class="absolute top-4 right-4">
+      <button onclick="toggleDarkMode()" class="bg-gray-200 dark:bg-gray-800 px-3 py-1 rounded-full text-sm shadow">
+        🌙 / ☀️
+      </button>
+    </div>
+
+    <!-- Halaman Utama -->
+    <div id="halaman-utama" class="text-center space-y-6 animate-fade-in">
+      <h1 class="text-4xl font-extrabold tracking-tight bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+        IPA: The Untold Stories
+      </h1>
+      <p class="text-lg max-w-md mx-auto text-gray-600 dark:text-gray-400">
+        Cerita-cerita absurd dari dunia IPA — antara realita, mistar, dan overthinking.
+      </p>
+      <button onclick="mulaiBaca()" class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-full text-lg shadow">🚀 Mulai Baca</button>
+    </div>
+
+    <!-- Halaman Cerita -->
+    <div id="cerita-container" class="hidden w-full max-w-3xl space-y-4 animate-fade-in">
+      <h2 id="judul-episode" class="text-2xl font-semibold text-center"></h2>
+      <div id="isi-cerita" class="prose dark:prose-invert max-w-none"></div>
+      <div class="flex justify-between">
+        <button onclick="prevEpisode()" class="bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded-full">⬅️ Sebelumnya</button>
+        <button onclick="nextEpisode()" class="bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded-full">➡️ Berikutnya</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const cerita = [
+      {
+        judul: "🧪 IPA: Ketika Gue, Bu Aziza, dan Sebuah Balok Bertemu",
+        isi: `
+<p><em>(Cerita ini based on true soal... tapi ditambahin dramatisasi dan overthinking ala gue)</em></p>
+<hr>
+<p>Jadi gini…<br>
+Waktu itu, gue duduk di kelas, mendengarkan Bu Aziza—guru IPA paling disiplin se-Bandung Raya. Dia berdiri di depan kelas sambil ngangkat mistar, kayak Thor angkat palu, terus bilang:</p>
+<blockquote>“Hari ini kita belajar tentang pengukuran balok.”</blockquote>
+<p>Balok, bro. Benda yang dari kecil kita injek, lempar, bahkan kadang dijadiin senjata pas rebutan mainan. Dan sekarang... gue harus ngukur dia.</p>
+<hr>
+<p>Awalnya gue kira gampang. Panjang, lebar, tinggi—tiga kata yang juga sering dipake waktu lo nanya ukuran kardus Indomie. Tapi ternyata, pas gue liat pilihan jawaban di soal...</p>
+<blockquote><strong>“Volume = 30 cm³, luas permukaan = 100 cm², mana yang bener?”</strong></blockquote>
+<p>Gue diem. Gue mikir.<br>
+Gue liat mistar. Mistar liat gue.<br>
+Kami saling tatap dalam kesunyian. Seperti dua mantan yang gak bisa move on.</p>
+<hr>
+<p>Gue mulai overthinking.</p>
+<blockquote><em>“Apa ini soal jebakan?”<br>
+“Kenapa volume bisa 30 tapi luasnya 100? Baloknya pipih banget apa gimana?”<br>
+“Apakah ini balok atau simbol kehidupan yang penuh perhitungan dan tekanan dari segala sisi?”</em></blockquote>
+<p>Ternyata bukan.<br>Itu cuma pelajaran tentang gimana <strong>ngukur benda dengan benar</strong>, gak lebih.</p>
+<hr>
+<p>📌 <strong>Kata Bu Aziza:</strong><br>
+“Anak-anak, ingat. Volume balok itu panjang × lebar × tinggi. Luas permukaan? Itu semua sisi dijumlahin. Bukan dikira-kira.”</p>
+<p>Gue langsung teringat waktu SD, ngukur tinggi badan pake pintu. Ternyata itu cara salah. <em>Sorry ya, Pintu.</em></p>
+<hr>
+<p>🧠 <strong>Fun Fact ala gue (yang katanya IPA juga):</strong><br>
+Dulu orang Mesir kuno ngukur tanah pake lengan dan jari. Jadi kalo kamu tinggi 160 cm, zaman dulu mungkin kamu akan dibilang:</p>
+<blockquote>“Tinggi kamu 9 tangan dan 3 jari.”</blockquote>
+<p>Yah... kedengerannya kayak deskripsi monster di game RPG sih, tapi yaudah lah ya.</p>
+<hr>
+<p>Tiba-tiba temen gue, Bowo, nyeletuk:</p>
+<blockquote>“Bu, kalo mistarnya patah terus kita sambung pake isolasi, masih bisa ngukur gak?”</blockquote>
+<p>Gue langsung ngelus jidat.<br>
+Dan dari situ gue sadar… <strong>sains itu bukan soal angka doang. Tapi soal niat, usaha, dan mistar yang utuh.</strong></p>
+<hr>
+<p>👨‍🔬 <strong>Pelajaran moral dari cerita ini:</strong><br>
+Jangan asal ngira. Jangan kira-kira.<br>
+Baik dalam ngukur balok, maupun ngukur perasaan orang lain 🥲<br>
+Karena bisa jadi... yang lo kira “5 cm”, ternyata cuma ilusi optik dari sudut pandang yang salah.</p>
+        `
+      }
+    ];
+
+    let index = 0;
+
+    function mulaiBaca() {
+      document.getElementById("halaman-utama").classList.add("hidden");
+      document.getElementById("cerita-container").classList.remove("hidden");
+      tampilkanEpisode();
+    }
+
+    function tampilkanEpisode() {
+      const ep = cerita[index];
+      document.getElementById("judul-episode").textContent = ep.judul;
+      document.getElementById("isi-cerita").innerHTML = ep.isi;
+    }
+
+    function nextEpisode() {
+      if (index < cerita.length - 1) {
+        index++;
+        tampilkanEpisode();
+      }
+    }
+
+    function prevEpisode() {
+      if (index > 0) {
+        index--;
+        tampilkanEpisode();
+      }
+    }
+
+    function toggleDarkMode() {
+      document.documentElement.classList.toggle('dark');
+    }
+  </script>
+
+  <style>
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fade-in 0.5s ease-out;
+    }
+  </style>
+
+</body>
+</html>
