@@ -2,103 +2,193 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IPA Kelas 8 - Materi Interaktif</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IPA: The Untold Stories</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary: #2563eb;
+      --bg-light: #f0f4f8;
+      --bg-dark: #1f2937;
+      --text-light: #1f2937;
+      --text-dark: #f3f4f6;
+      --card-bg-light: #ffffff;
+      --card-bg-dark: #374151;
+    }
+
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom right, #bae6fd, #dbeafe);
-      color: #111827;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 24px;
-    }
-
-    .title {
-      text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 24px;
-    }
-
-    .cards {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-light);
+      color: var(--text-light);
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 16px;
-    }
-
-    .card {
-      background: white;
-      padding: 20px;
-      width: 220px;
-      border-radius: 20px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-      cursor: pointer;
-      text-align: center;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px;
       transition: all 0.3s ease;
     }
 
+    body.dark {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    .fade-in {
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1, h2 {
+      margin-bottom: 20px;
+    }
+
+    .start-btn, .back-btn {
+      background: var(--primary);
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 999px;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: background 0.3s ease;
+    }
+
+    .start-btn:hover, .back-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .toggle-darkmode {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      background: #e5e7eb;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .menu {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 40px;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .card {
+      padding: 16px 24px;
+      border-radius: 16px;
+      background: var(--card-bg-light);
+      color: var(--text-light);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+    }
+
+    body.dark .card {
+      background: var(--card-bg-dark);
+      color: var(--text-dark);
+    }
+
     .card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
     }
 
     .iframe-wrapper {
-      margin-top: 32px;
       display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 480px;
+      margin-top: 32px;
     }
 
     iframe {
       width: 100%;
-      height: 75vh;
+      height: 480px;
       border: none;
-      border-radius: 16px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    @media (max-width: 640px) {
-      .card {
-        width: 100%;
-      }
-      iframe {
-        height: 80vh;
-      }
+    .progress-bar {
+      width: 0;
+      height: 4px;
+      background: var(--primary);
+      margin: 12px 0;
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    body.dark .toggle-darkmode {
+      background: #4b5563;
+      color: white;
     }
   </style>
+</head>
+<body class="fade-in">
+  <button class="toggle-darkmode" onclick="toggleDarkMode()">🌙 Mode</button>
+
+  <!-- Landing Page -->
+  <div class="landing" id="landingPage">
+    <h1>🌟 IPA: The Untold Stories</h1>
+    <button class="start-btn" onclick="startApp()">Mulai</button>
+  </div>
+
+  <!-- Menu Card -->
+  <div class="menu" id="cardMenu">
+    <h2>📘 Pilih Materi IPA Kelas 8</h2>
+    <div class="card" onclick="loadMateri('https://drive.google.com/file/d/1Blq4CW935nDNcgoiuE2DRg_fZUyos8td6KbLHlu6fnY/preview')">🔥 Cerita Seru</div>
+    <div class="card" onclick="loadMateri('https://drive.google.com/file/d/1qxLXRsoJgxXEXct59TfXSkU1zxZsSzkf/preview')">⚡ Getaran & Gelombang</div>
+    <div class="card" onclick="loadMateri('https://drive.google.com/file/d/1Vri1UunM5Gm9e5L9eG7sHXxjKDE6EHpG/preview')">⚙️ Pesawat Sederhana</div>
+  </div>
+
+  <!-- Iframe Viewer -->
+  <div class="iframe-wrapper" id="iframeWrapper">
+    <button class="back-btn" onclick="goBack()">← Kembali ke Menu</button>
+    <div class="progress-bar" id="progressBar"></div>
+    <iframe id="docViewer" allowfullscreen></iframe>
+  </div>
 
   <script>
-    function loadDoc(docId) {
+    function startApp() {
+      document.getElementById("landingPage").style.display = "none";
+      document.getElementById("cardMenu").style.display = "flex";
+    }
+
+    function loadMateri(url) {
+      document.getElementById("cardMenu").style.display = "none";
+      document.getElementById("iframeWrapper").style.display = "flex";
+
       const iframe = document.getElementById("docViewer");
-      const wrapper = document.getElementById("iframeWrapper");
-      iframe.src = `https://docs.google.com/document/d/${docId}/preview`;
-      wrapper.style.display = "block";
-      window.scrollTo({ top: wrapper.offsetTop - 20, behavior: 'smooth' });
+      const bar = document.getElementById("progressBar");
+      bar.style.width = "0";
+
+      setTimeout(() => bar.style.width = "80%", 100); // Fake loading
+      setTimeout(() => bar.style.width = "100%", 1000);
+
+      iframe.src = url;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function goBack() {
+      document.getElementById("iframeWrapper").style.display = "none";
+      document.getElementById("cardMenu").style.display = "flex";
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
     }
   </script>
-</head>
-<body>
-  <div class="container">
-    <div class="title">📘 Pilih Materi IPA Kelas 8</div>
-    <div class="cards">
-      <div class="card" onclick="loadDoc('1Blq4CW935nDNcgoiuE2DRg_fZUyos8td6KbLHlu6fnY')">
-        🔥 Cerita Seru
-      </div>
-      <div class="card" onclick="loadDoc('2Z3X4C5V6B7N8M9Q1W2')">
-        ⚡ Getaran & Gelombang
-      </div>
-      <div class="card" onclick="loadDoc('3L4K5J6H7G8F9D0S1A')">
-        ⚙️ Pesawat Sederhana
-      </div>
-      <!-- Tambah lagi card materi lainnya -->
-    </div>
-
-    <div class="iframe-wrapper" id="iframeWrapper">
-      <iframe id="docViewer" allowfullscreen></iframe>
-    </div>
-  </div>
 </body>
 </html>
