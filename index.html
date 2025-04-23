@@ -3,72 +3,101 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Materi IPA Kelas 8</title>
-  <script>
-    function loadDoc() {
-      const select = document.getElementById("materiSelect");
-      const iframe = document.getElementById("docViewer");
-      const wrapper = document.getElementById("iframeWrapper");
-      const docId = select.value;
-      if (docId) {
-        iframe.src = `https://docs.google.com/document/d/${docId}/preview`;
-        wrapper.style.display = "block";
-      } else {
-        wrapper.style.display = "none";
-        iframe.src = "";
-      }
-    }
-  </script>
+  <title>IPA Kelas 8 - Materi Interaktif</title>
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: #e0f2fe;
+      background: linear-gradient(to bottom right, #bae6fd, #dbeafe);
       color: #111827;
     }
+
     .container {
-      max-width: 100vw;
-      padding: 16px;
+      max-width: 1000px;
+      margin: auto;
+      padding: 24px;
     }
+
+    .title {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 24px;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+    }
+
     .card {
       background: white;
-      border-radius: 16px;
-      padding: 16px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      padding: 20px;
+      width: 220px;
+      border-radius: 20px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s ease;
     }
-    select {
-      width: 100%;
-      padding: 12px;
-      border-radius: 12px;
-      border: 1px solid #3b82f6;
-      font-size: 16px;
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     }
+
+    .iframe-wrapper {
+      margin-top: 32px;
+      display: none;
+    }
+
     iframe {
-      border: none;
       width: 100%;
       height: 75vh;
+      border: none;
       border-radius: 16px;
     }
+
     @media (max-width: 640px) {
+      .card {
+        width: 100%;
+      }
       iframe {
         height: 80vh;
       }
     }
   </style>
+
+  <script>
+    function loadDoc(docId) {
+      const iframe = document.getElementById("docViewer");
+      const wrapper = document.getElementById("iframeWrapper");
+      iframe.src = `https://docs.google.com/document/d/${docId}/preview`;
+      wrapper.style.display = "block";
+      window.scrollTo({ top: wrapper.offsetTop - 20, behavior: 'smooth' });
+    }
+  </script>
 </head>
 <body>
   <div class="container">
-    <div class="card">
-      <h2>📘 Materi IPA Kelas 8</h2>
-      <label for="materiSelect">Pilih bab untuk ditampilkan:</label>
-      <select id="materiSelect" onchange="loadDoc()">
-        <option value="">-- Pilih Materi --</option>
-        <option value="1Blq4CW935nDNcgoiuE2DRg_fZUyos8td6KbLHlu6fnY">Cerita Seru</option>
-        <option value="2Z3X4C5V6B7N8M9Q1W2">Getaran & Gelombang</option>
-      </select>
-      <div id="iframeWrapper" style="display:none; margin-top: 20px;">
-        <iframe id="docViewer" allowfullscreen></iframe>
+    <div class="title">📘 Pilih Materi IPA Kelas 8</div>
+    <div class="cards">
+      <div class="card" onclick="loadDoc('1Blq4CW935nDNcgoiuE2DRg_fZUyos8td6KbLHlu6fnY')">
+        🔥 Cerita Seru
       </div>
+      <div class="card" onclick="loadDoc('2Z3X4C5V6B7N8M9Q1W2')">
+        ⚡ Getaran & Gelombang
+      </div>
+      <div class="card" onclick="loadDoc('3L4K5J6H7G8F9D0S1A')">
+        ⚙️ Pesawat Sederhana
+      </div>
+      <!-- Tambah lagi card materi lainnya -->
+    </div>
+
+    <div class="iframe-wrapper" id="iframeWrapper">
+      <iframe id="docViewer" allowfullscreen></iframe>
     </div>
   </div>
 </body>
