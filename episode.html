@@ -27,6 +27,18 @@
   </div>
 
   <script>
+    // Swipe gesture
+let startX = 0;
+document.addEventListener('touchstart', (e) => startX = e.touches[0].clientX);
+document.addEventListener('touchend', (e) => {
+  let endX = e.changedTouches[0].clientX;
+  if (endX < startX - 50 && ep < maxEpisode) {
+    window.location.href = `episode.html?ep=${ep + 1}`;
+  }
+  if (endX > startX + 50 && ep > 1) {
+    window.location.href = `episode.html?ep=${ep - 1}`;
+  }
+});
     const query = new URLSearchParams(window.location.search);
     const ep = parseInt(query.get("ep")) || 1;
 
