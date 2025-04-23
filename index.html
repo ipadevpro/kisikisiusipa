@@ -2,36 +2,56 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Materi IPA dari Google Docs</title>
+  <title>Materi IPA - Iframe + Dropdown</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    #materi { white-space: pre-wrap; background: #f0f0f0; padding: 15px; border-radius: 8px; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 30px;
+      max-width: 800px;
+      margin: auto;
+    }
+    select {
+      font-size: 16px;
+      padding: 6px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
   </style>
 </head>
 <body>
-  <h1>📚 Materi IPA Hari Ini</h1>
-  <p>Materi diambil langsung dari Google Docs, realtime & otomatis!</p>
+  <h1>📘 Materi IPA Kelas 8</h1>
+  <p>Pilih materi untuk ditampilkan dari Google Docs:</p>
 
-  <div id="materi">⏳ Sedang memuat materi...</div>
+  <select id="materiSelect">
+    <option value="">-- Pilih Materi --</option>
+    <option value="1Blq4CW935nDNcgoiuE2DRg_fZUyos8td6KbLHlu6fnY">coba coba</option>
+    <option value="2B3C4D5E6F7G8H9I0J1A">Bab 2 - Usaha & Energi</option>
+    <option value="3C4D5E6F7G8H9I0J1A2B">Bab 3 - Pesawat Sederhana</option>
+    <!-- Tambahkan opsi lain sesuai kebutuhan -->
+  </select>
+
+  <iframe id="docViewer" src="" style="display: none;"></iframe>
 
   <script>
-    const DOC_ID = "1Blq4CW935nDNcgoiuE2DRg_fZUyos8td6KbLHlu6fnY"; // Ganti dengan ID dokumen kamu
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxrD5vjcqaXCiD3QOF5EcBZs9u69jdHK8IVDHbA7T4f7DOD8wMUUbqCIgaQgDvWxhQ-/exec"; // Ganti URL Web App
+    const select = document.getElementById("materiSelect");
+    const iframe = document.getElementById("docViewer");
 
-    fetch(`${WEB_APP_URL}?docId=${DOC_ID}`)
-      .then(res => res.json())
-      .then(data => {
-        const el = document.getElementById("materi");
-        if (data.success) {
-          el.innerText = data.content;
-        } else {
-          el.innerText = "⚠️ Gagal memuat materi: " + data.error;
-        }
-      })
-      .catch(err => {
-        document.getElementById("materi").innerText = "⚠️ Terjadi kesalahan saat memuat materi.";
-        console.error("Fetch error:", err);
-      });
+    select.addEventListener("change", () => {
+      const docId = select.value;
+      if (docId) {
+        iframe.src = `https://docs.google.com/document/d/${docId}/preview`;
+        iframe.style.display = "block";
+      } else {
+        iframe.src = "";
+        iframe.style.display = "none";
+      }
+    });
   </script>
 </body>
 </html>
