@@ -1,38 +1,37 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Markdown Test</title>
-
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class'
-    }
-  </script>
-
-  <!-- Marked.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Materi IPA dari Google Docs</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    #materi { white-space: pre-wrap; background: #f0f0f0; padding: 15px; border-radius: 8px; }
+  </style>
 </head>
-<body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-white p-6">
+<body>
+  <h1>📚 Materi IPA Hari Ini</h1>
+  <p>Materi diambil langsung dari Google Docs, realtime & otomatis!</p>
 
-  <div id="content" class="text-lg leading-relaxed space-y-4 max-w-2xl mx-auto"></div>
+  <div id="materi">⏳ Sedang memuat materi...</div>
 
   <script>
-    const markdownText = `
-# Episode 1: Tabung Reaksi Ngambek 😡
+    const DOC_ID = "1Blq4CW935nDNcgoiuE2DRg_fZUyos8td6KbLHlu6fnY"; // Ganti dengan ID dokumen kamu
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxrD5vjcqaXCiD3QOF5EcBZs9u69jdHK8IVDHbA7T4f7DOD8wMUUbqCIgaQgDvWxhQ-/exec"; // Ganti URL Web App
 
-Semua bermula saat si tabung reaksi menolak direbus.
-
-> "Gue bukan mie instan, bro!" katanya.
-
-Seketika seluruh laboratorium berubah jadi medan debat logika antara kaca dan air panas.
-    `;
-
-    const html = marked.parse(markdownText);
-    document.getElementById("content").innerHTML = html;
+    fetch(`${WEB_APP_URL}?docId=${DOC_ID}`)
+      .then(res => res.json())
+      .then(data => {
+        const el = document.getElementById("materi");
+        if (data.success) {
+          el.innerText = data.content;
+        } else {
+          el.innerText = "⚠️ Gagal memuat materi: " + data.error;
+        }
+      })
+      .catch(err => {
+        document.getElementById("materi").innerText = "⚠️ Terjadi kesalahan saat memuat materi.";
+        console.error("Fetch error:", err);
+      });
   </script>
 </body>
 </html>
