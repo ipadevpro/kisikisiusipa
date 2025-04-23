@@ -1,18 +1,38 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IPA: The Untold Stories</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Markdown Test</title>
+
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    }
+  </script>
+
+  <!-- Marked.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
-<body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-white h-screen flex flex-col justify-center items-center transition-all duration-500">
+<body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-white p-6">
 
-  <div class="text-center">
-    <h1 class="text-4xl font-bold mb-4">IPA: The Untold Stories</h1>
-    <p class="mb-6 text-lg">Sains itu absurd, dan kami punya buktinya 🧪🔥</p>
-    <a href="episode.html?ep=1" class="px-5 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition">🔍 Mulai Baca</a>
-  </div>
+  <div id="content" class="text-lg leading-relaxed space-y-4 max-w-2xl mx-auto"></div>
 
+  <script>
+    const markdownText = `
+# Episode 1: Tabung Reaksi Ngambek 😡
+
+Semua bermula saat si tabung reaksi menolak direbus.
+
+> "Gue bukan mie instan, bro!" katanya.
+
+Seketika seluruh laboratorium berubah jadi medan debat logika antara kaca dan air panas.
+    `;
+
+    const html = marked.parse(markdownText);
+    document.getElementById("content").innerHTML = html;
+  </script>
 </body>
 </html>
